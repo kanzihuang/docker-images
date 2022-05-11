@@ -6,6 +6,6 @@ RUN set -eux; \
     apk add --no-cache \
         bash \
         busybox-extras \
-        iptables \
+        iproute2 \
         tcpdump
-ENTRYPOINT ["sh", "-c", "trap exit TERM; while true; do sleep 1; done"]
+ENTRYPOINT ["sh", "-c", "trap exit SIGTERM; while true; do sleep 1; done"]
