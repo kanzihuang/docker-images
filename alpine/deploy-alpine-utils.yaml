@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: alpine-utils
-  name: alpine-utils
+    app: alpine
+  name: alpine
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: alpine-utils
+      app: alpine
   template:
     metadata:
       labels:
-        app: alpine-utils
+        app: alpine
     spec:
       containers:
       - image: kanzihuang/alpine:utils
@@ -26,5 +26,5 @@ spec:
             podAffinityTerm:
               labelSelector:
                 matchLabels:
-                  app: alpine-utils
+                  app: alpine
               topologyKey: kubernetes.io/hostname             
