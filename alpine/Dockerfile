@@ -6,6 +6,7 @@ RUN set -eux; \
     apk add --no-cache \
         bash \
         busybox-extras \
+        curl \
         iproute2 \
         tcpdump
 ENTRYPOINT ["sh", "-c", "trap exit SIGTERM; while true; do sleep 1; done"]
