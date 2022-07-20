@@ -13,9 +13,6 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
       -
@@ -28,13 +25,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./alpine
+          context: ./releases/openvpn
           push: true
-          tags: kanzihuang/alpine:latest
-      -
-        name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: ./releases/istio
-          push: true
-          tags: kanzihuang/releases-istio:latest
+          tags: kanzihuang/releases-openvpn:latest
