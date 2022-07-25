@@ -25,6 +25,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./releases/calicoctl
+          context: ./releases/flannel
           push: true
-          tags: kanzihuang/releases-calicoctl:latest
+          tags: kanzihuang/releases-flannel:latest
