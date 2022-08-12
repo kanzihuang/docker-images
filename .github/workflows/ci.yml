@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - 'main'
+env:
+  DOCKERHUB_REGISTRY: docker.io
+  HUAWEIHUB_REGISTRY: swr.cn-north-4.myhuaweicloud.com
+  IMAGE_NAME: kubespray
 
 jobs:
   docker:
@@ -19,12 +23,23 @@ jobs:
         name: Login to DockerHub
         uses: docker/login-action@v2
         with:
+          registry: ${{ env.DOCKERHUB_REGISTRY }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Login to HuaweiHub
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.HUAWEIHUB_REGISTRY }}
+          username: ${{ secrets.HUAWEIHUB_USERNAME }}
+          password: ${{ secrets.HUAWEIHUB_TOKEN }}
+      -
+        name: Build and push ${{ env.IMAGE_NAME }} images
         uses: docker/build-push-action@v3
         with:
-          context: ./releases/nerdctl
+          context: ./releases/${{ env.IMAGE_NAME }}
+          file: ./releases/${{ env.IMAGE_NAME }}/Dockerfile
           push: true
-          tags: kanzihuang/releases-nerdctl:latest
+          tags: |
+            ${{ env.DOCKERHUB_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
+            ${{ env.HUAWEIHUB_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
