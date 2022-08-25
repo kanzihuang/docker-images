@@ -10,7 +10,8 @@ env:
   HUAWEIHUB1_REGISTRY: swr.cn-north-1.myhuaweicloud.com
   HUAWEIHUB2_ZONE: cn-north-4
   HUAWEIHUB2_REGISTRY: swr.cn-north-4.myhuaweicloud.com
-  IMAGE_NAME: kubespray
+  IMAGE_NAME: kubespray-file-server
+  IMAGE_VERSION: v2.19.0
 
 jobs:
   docker:
@@ -47,10 +48,10 @@ jobs:
         name: Build and push ${{ env.IMAGE_NAME }} images
         uses: docker/build-push-action@v3
         with:
-          context: ./releases/${{ env.IMAGE_NAME }}
-          file: ./releases/${{ env.IMAGE_NAME }}/Dockerfile
+          context: ./images/${{ env.IMAGE_NAME }}
+          file: ./images/${{ env.IMAGE_NAME }}/Dockerfile
           push: true
           tags: |
-            ${{ env.DOCKERHUB_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
-            ${{ env.HUAWEIHUB1_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
-            ${{ env.HUAWEIHUB2_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
+            ${{ env.DOCKERHUB_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+            ${{ env.HUAWEIHUB1_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+            ${{ env.HUAWEIHUB2_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
