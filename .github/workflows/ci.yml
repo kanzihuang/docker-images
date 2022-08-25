@@ -6,7 +6,10 @@ on:
       - 'main'
 env:
   DOCKERHUB_REGISTRY: docker.io
-  HUAWEIHUB_REGISTRY: swr.cn-north-4.myhuaweicloud.com
+  HUAWEIHUB1_ZONE: cn-north-1
+  HUAWEIHUB1_REGISTRY: swr.cn-north-1.myhuaweicloud.com
+  HUAWEIHUB2_ZONE: cn-north-4
+  HUAWEIHUB2_REGISTRY: swr.cn-north-4.myhuaweicloud.com
   IMAGE_NAME: kubespray
 
 jobs:
@@ -30,8 +33,15 @@ jobs:
         name: Login to HuaweiHub
         uses: docker/login-action@v2
         with:
-          registry: ${{ env.HUAWEIHUB_REGISTRY }}
-          username: ${{ secrets.HUAWEIHUB_USERNAME }}
+          registry: ${{ env.HUAWEIHUB1_REGISTRY }}
+          username: ${{ env.HUAWEIHUB1_ZONE }}@${{ secrets.HUAWEIHUB_USERNAME }}
+          password: ${{ secrets.HUAWEIHUB_TOKEN }}
+      -
+        name: Login to HuaweiHub
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.HUAWEIHUB2_REGISTRY }}
+          username: ${{ env.HUAWEIHUB2_ZONE }}@${{ secrets.HUAWEIHUB_USERNAME }}
           password: ${{ secrets.HUAWEIHUB_TOKEN }}
       -
         name: Build and push ${{ env.IMAGE_NAME }} images
@@ -42,4 +52,5 @@ jobs:
           push: true
           tags: |
             ${{ env.DOCKERHUB_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
-            ${{ env.HUAWEIHUB_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
+            ${{ env.HUAWEIHUB1_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
+            ${{ env.HUAWEIHUB2_REGISTRY }}/kanzihuang/releases-${{ env.IMAGE_NAME }}:latest
