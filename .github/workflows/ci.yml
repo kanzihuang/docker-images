@@ -11,7 +11,7 @@ env:
   HUAWEIHUB2_ZONE: cn-north-4
   HUAWEIHUB2_REGISTRY: swr.cn-north-4.myhuaweicloud.com
   IMAGE_NAME: kubespray-file-server
-  IMAGE_VERSION: v2.19.0
+  IMAGE_VERSION: v2.19.1
 
 jobs:
   docker:
