@@ -6,12 +6,10 @@ on:
       - 'main'
 env:
   DOCKERHUB_REGISTRY: docker.io
-  HUAWEIHUB1_ZONE: cn-north-1
-  HUAWEIHUB1_REGISTRY: swr.cn-north-1.myhuaweicloud.com
-  HUAWEIHUB2_ZONE: cn-north-4
-  HUAWEIHUB2_REGISTRY: swr.cn-north-4.myhuaweicloud.com
-  IMAGE_NAME: kubespray-file-server
-  IMAGE_VERSION: v2.19.1
+  HUAWEIHUB_REGISTRY: swr.cn-north-1.myhuaweicloud.com
+  ALIYUNHUB_REGISTRY: registry.cn-beijing.aliyuncs.com
+  IMAGE_NAME: istio-release
+  IMAGE_VERSION: 1.15.0
 
 jobs:
   docker:
@@ -31,18 +29,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Login to HuaweiHub
+        name: Login to AliyunHub
         uses: docker/login-action@v2
         with:
-          registry: ${{ env.HUAWEIHUB1_REGISTRY }}
-          username: ${{ env.HUAWEIHUB1_ZONE }}@${{ secrets.HUAWEIHUB_USERNAME }}
-          password: ${{ secrets.HUAWEIHUB_TOKEN }}
+          registry: ${{ env.ALIYUNHUB_REGISTRY }}
+          username: ${{ secrets.ALIYUNHUB_USERNAME }}
+          password: ${{ secrets.ALIYUNHUB_TOKEN }}
       -
         name: Login to HuaweiHub
         uses: docker/login-action@v2
         with:
-          registry: ${{ env.HUAWEIHUB2_REGISTRY }}
-          username: ${{ env.HUAWEIHUB2_ZONE }}@${{ secrets.HUAWEIHUB_USERNAME }}
+          registry: ${{ env.HUAWEIHUB_REGISTRY }}
+          username: ${{ secrets.HUAWEIHUB_USERNAME }}
           password: ${{ secrets.HUAWEIHUB_TOKEN }}
       -
         name: Build and push ${{ env.IMAGE_NAME }} images
@@ -53,5 +51,5 @@ jobs:
           push: true
           tags: |
             ${{ env.DOCKERHUB_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-            ${{ env.HUAWEIHUB1_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-            ${{ env.HUAWEIHUB2_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+            ${{ env.ALIYUNHUB_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+            ${{ env.HUAWEIHUB_REGISTRY }}/kanzihuang/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
