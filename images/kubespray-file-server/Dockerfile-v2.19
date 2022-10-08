@@ -2,7 +2,7 @@ FROM ubuntu as build
 
 RUN apt-get update && apt-get -y install wget
 WORKDIR /usr/share/nginx/html/download/
-COPY kubespray-files.list kubespray-files.list
+COPY kubespray-files-v2.19.1.list kubespray-files.list
 RUN sed -i '\@^https://github.com/projectcalico/calicoctl/releases/download/@d' kubespray-files.list
 RUN wget -nv -x -P ./ -i kubespray-files.list
 
