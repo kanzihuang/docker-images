@@ -8,8 +8,8 @@ env:
   DOCKERHUB_REGISTRY: docker.io
   HUAWEIHUB_REGISTRY: swr.cn-north-1.myhuaweicloud.com
   ALIYUNHUB_REGISTRY: registry.cn-beijing.aliyuncs.com
-  IMAGE_NAME: kubespray-file-server
-  IMAGE_VERSION: v2.20
+  IMAGE_NAME: istio-release
+  IMAGE_VERSION: 1.15.2
 
 jobs:
   docker:
